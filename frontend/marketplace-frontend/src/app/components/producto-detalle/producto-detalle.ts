@@ -1,30 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-producto-detalle',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.scss']
+  templateUrl: './producto-detalle.html',
+  styleUrls: ['./producto-detalle.scss']
 })
-export class Home {
- categorias = [
-    { nombre: 'Moda y Accesorios', icono: 'bi-bag-fill' },
-    { nombre: 'Tecnología', icono: 'bi-laptop' },
-    { nombre: 'Hogar y Cocina', icono: 'bi-house-heart-fill' },
-    { nombre: 'Artesanías', icono: 'bi-brush-fill' },
-    { nombre: 'Salud y Belleza', icono: 'bi-heart-pulse-fill' },
-    { nombre: 'Niños y Juguetes', icono: 'bi-emoji-smile-fill' },
-    { nombre: 'Servicios Locales', icono: 'bi-tools' }
-  ];
+export class ProductoDetalle {
+producto: any;
 
-  productosDestacados = [
+  productos = [
     {
       id: 1,
       nombre: 'Bolso artesanal de cuero',
       precio: 150,
+      descripcion: 'Bolso hecho a mano con cuero natural, elaborado por artesanos locales. Ideal para uso diario.',
       imagen: 'http://3.bp.blogspot.com/-Dy_c5oZHuLU/TdaQKo7s5kI/AAAAAAAAApA/bsFnqiSsBOs/s1600/Doc+suela-azulino.jpg',
       categoria: 'Moda y Accesorios'
     },
@@ -32,6 +25,7 @@ export class Home {
       id: 2,
       nombre: 'Taza de cerámica pintada a mano',
       precio: 40,
+      descripcion: 'Taza artesanal con detalles únicos pintados a mano por artistas peruanos.',
       imagen: 'https://i.etsystatic.com/24345586/r/il/f4c017/2484000351/il_1588xN.2484000351_lr2x.jpg',
       categoria: 'Artesanías'
     },
@@ -39,6 +33,7 @@ export class Home {
       id: 3,
       nombre: 'Pulsera tejida artesanal',
       precio: 25,
+      descripcion: 'Pulsera colorida hecha con hilo peruano resistente. Perfecta para regalo o uso personal.',
       imagen: 'https://i.pinimg.com/originals/c6/be/f8/c6bef8f3bbd6e3e8ad40625d903349c1.jpg',
       categoria: 'Moda y Accesorios'
     },
@@ -46,6 +41,7 @@ export class Home {
       id: 4,
       nombre: 'Lámpara decorativa de bambú',
       precio: 90,
+      descripcion: 'Lámpara ecológica fabricada con bambú. Aporta calidez y estilo a cualquier ambiente.',
       imagen: 'https://tse2.mm.bing.net/th/id/OIP.oK8DRr5ujp_EdGPrP4qeigHaHa?pid=Api&P=0&h=180',
       categoria: 'Hogar y Cocina'
     },
@@ -57,17 +53,15 @@ export class Home {
       categoria: 'Salud y Belleza'
     }
   ];
-    categoriaSeleccionada: string = 'Todos';
 
-  seleccionarCategoria(categoria: string) {
-    this.categoriaSeleccionada = categoria;
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.producto = this.productos.find(p => p.id === id);
   }
 
-  obtenerProductosFiltrados() {
-    if (this.categoriaSeleccionada === 'Todos') {
-      return this.productosDestacados;
-    }
-    return this.productosDestacados.filter(p => p.categoria === this.categoriaSeleccionada);
+  agregarAlCarrito() {
+    alert(`🛒 "${this.producto.nombre}" agregado al carrito.`);
   }
-
 }

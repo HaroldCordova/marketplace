@@ -1,0 +1,38 @@
+.banner {
+  background: linear-gradient(135deg, #007bff, #00bcd4);
+  color: white;
+  text-align: left;
+}
+
+.categorias {
+  position: sticky;
+  top: 90px;
+  background-color: #fff;
+}
+
+.list-group-item {
+  cursor: pointer;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+}
+
+.list-group-item:hover {
+  background-color: #f9f9f9;
+  transition: 0.2s;
+}
+
+.list-group-item.active {
+  background-color: #e3f2fd;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.producto-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.producto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}

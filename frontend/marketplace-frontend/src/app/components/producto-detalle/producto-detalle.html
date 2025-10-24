@@ -1,0 +1,36 @@
+<div class="container py-4" *ngIf="producto">
+  <div class="row">
+    <!-- Imagen -->
+    <div class="col-md-6 text-center">
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" class="img-fluid rounded shadow-lg detalle-imagen">
+    </div>
+
+    <!-- Detalle -->
+    <div class="col-md-6">
+      <h3 class="fw-bold">{{ producto.nombre }}</h3>
+      <p class="text-muted">{{ producto.categoria }}</p>
+      <h4 class="text-success fw-bold mb-3">S/ {{ producto.precio }}</h4>
+      <p class="lead">{{ producto.descripcion }}</p>
+
+      <button class="btn btn-primary px-4 mt-3" (click)="agregarAlCarrito()">
+        🛒 Agregar al carrito
+      </button>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+
+  <!-- Recomendaciones -->
+  <h5 class="mb-3">🧡 Productos similares</h5>
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let item of productos | slice:0:4">
+      <div class="card h-100 shadow-sm">
+        <img [src]="item.imagen" class="card-img-top" alt="{{ item.nombre }}">
+        <div class="card-body">
+          <h6 class="card-title">{{ item.nombre }}</h6>
+          <p class="text-success fw-semibold">S/ {{ item.precio }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

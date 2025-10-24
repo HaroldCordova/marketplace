@@ -1,0 +1,19 @@
+.banner {
+  background: linear-gradient(135deg, #007bff, #6610f2);
+  color: white;
+  text-align: center;
+}
+
+.list-group-item:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  transition: transform 0.2s;
+}
+
+.sticky-top {
+  top: 100px;
+}
