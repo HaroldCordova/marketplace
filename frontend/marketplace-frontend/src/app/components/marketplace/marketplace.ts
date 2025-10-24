@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import {CarritoService} from '../../carrito'
 
 @Component({
   selector: 'app-marketplace',
@@ -44,13 +44,10 @@ searchTerm: string = '';
     }
   ];
 
-  get productosFiltrados() {
-    return this.productos.filter(p =>
-      p.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
+   constructor(private carritoService: CarritoService) {}
 
   agregarAlCarrito(producto: any) {
-    alert(`🛒 ${producto.nombre} fue agregado al carrito.`);
+    this.carritoService.agregarProducto(producto);
+    alert(`🛒 "${producto.nombre}" agregado al carrito.`);
   }
 }

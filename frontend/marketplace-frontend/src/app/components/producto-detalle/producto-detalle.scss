@@ -1,0 +1,17 @@
+.detalle-imagen {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+button {
+  font-size: 1rem;
+}
+
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}

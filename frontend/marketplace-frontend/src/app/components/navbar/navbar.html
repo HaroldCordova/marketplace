@@ -10,9 +10,15 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/marketplace">Productos</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/carrito">Carrito</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/carrito">
+             Carrito
+            <span *ngIf="contadorCarrito > 0" class="badge bg-success ms-1">{{ contadorCarrito }}</span>
+          </a>
+        </li>
+        <li class="nav-item"><a class="nav-link" routerLink="/login">Acceso</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
