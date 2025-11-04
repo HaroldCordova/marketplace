@@ -11,14 +11,22 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.scss']
 })
 export class Login {
-email: string = '';
-  password: string = '';
+  email = '';
+  password = '';
+  rolSeleccionado = 'comprador';
 
-  onSubmit() {
-    if (this.email === 'Harold20' && this.password === '2020') {
-      alert(' Bienvenido administrador Orion');
+  constructor(private router: Router) {}
+
+  iniciarSesion() {
+    console.log(`Rol seleccionado: ${this.rolSeleccionado}`);
+
+    // Simulación de autenticación
+    if (this.rolSeleccionado === 'admin') {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (this.rolSeleccionado === 'vendedor') {
+      this.router.navigate(['/vendedor/dashboard']);
     } else {
-      alert(' Credenciales incorrectas');
+      this.router.navigate(['/marketplace']);
     }
   }
 }

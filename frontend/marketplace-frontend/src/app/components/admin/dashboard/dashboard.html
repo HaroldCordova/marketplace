@@ -1,0 +1,32 @@
+<div class="container py-5">
+  <h2 class="fw-bold text-danger mb-4">⚙️ Panel del Administrador</h2>
+
+  <div class="row text-center">
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm p-3 border-danger">
+        <h5 class="text-muted">Usuarios Activos</h5>
+        <h3 class="fw-bold text-danger">{{ usuariosActivos }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm p-3 border-danger">
+        <h5 class="text-muted">Categorías</h5>
+        <h3 class="fw-bold text-danger">{{ categorias }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm p-3 border-danger">
+        <h5 class="text-muted">Reportes Pendientes</h5>
+        <h3 class="fw-bold text-danger">{{ reportesPendientes }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="text-center">
+    <button class="btn btn-danger px-4 me-2">👥 Gestionar usuarios</button>
+    <button class="btn btn-outline-danger px-4 me-2">📂 Categorías</button>
+    <button class="btn btn-outline-dark px-4">📊 Ver reportes</button>
+  </div>
+</div>
