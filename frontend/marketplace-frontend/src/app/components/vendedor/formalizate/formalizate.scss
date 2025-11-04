@@ -1,22 +1,25 @@
 .card {
-  background-color: #ffffff;
+  background-color: #00a86b; /* Verde jade medio */
+  color: #ffffff; /* Contraste de texto */
 }
 
 .progress {
-  background-color: #e9ecef;
+  background-color: #e6f4ec; /* Verde muy claro de fondo */
   border-radius: 10px;
 }
 
 .progress-bar {
   font-weight: 600;
+  background-color: #00a86b; /* Verde jade medio */
+  color: #ffffff;
 }
 
 .list-group-item {
   border: none;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid #cde7d8; /* Verde pálido */
   transition: all 0.2s ease;
 }
 
 .list-group-item:hover {
-  background-color: #f8f9fa;
+  background-color: #f0faf4; /* Verde muy suave al pasar el mouse */
 }
