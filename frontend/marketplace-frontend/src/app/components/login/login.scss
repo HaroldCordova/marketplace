@@ -1,81 +1,150 @@
-/* 🌿 Fondo general */
 .login-container {
-  background: radial-gradient(circle at top left, #c8ffe0, #b2f0d5, #a8edea, #e0f7fa);
-  background-size: 400% 400%;
-  animation: gradientShift 10s ease infinite;
-}
-
-/* 💎 Caja de login con efecto "card moderno" */
-.login-box {
-  width: 400px;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  transition: all 0.3s ease;
-  animation: fadeIn 0.7s ease;
-}
-
-.login-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* ✨ Icono superior */
-.brand-icon {
-  font-size: 3rem;
-  color: #1b8f5a;
-  background: rgba(27, 143, 90, 0.1);
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: inline-flex;
+  height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
+  background: radial-gradient(circle at 20% 30%, #0ea5e9, transparent 40%),
+              radial-gradient(circle at 80% 70%, #22c55e, transparent 40%),
+              linear-gradient(135deg, #0f172a, #1e293b);
+  background-size: 200% 200%;
+  animation: backgroundShift 12s ease infinite;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  position: relative;
 }
 
-/* 🧊 Campos modernos */
-.modern-input {
-  border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 0.7rem 1rem;
-  font-size: 0.95rem;
-  transition: all 0.25s ease;
-  background-color: #fafafa;
+.login-container::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 70%);
+  top: -100px;
+  left: -150px;
+  filter: blur(100px);
+  animation: floatGlow 10s ease-in-out infinite alternate;
 }
 
-.modern-input:focus {
-  border-color: #1b8f5a;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 0.25rem rgba(27, 143, 90, 0.15);
-}
+.login-box {
+  position: relative;
+  z-index: 2;
+  width: 420px;
+  padding: 3rem 2.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+  animation: fadeIn 0.8s ease-out;
 
-/* 🌱 Botón moderno */
-.btn-modern {
-  background: linear-gradient(135deg, #1b8f5a, #3cb371);
-  color: #fff;
-  border: none;
-  padding: 0.75rem 0;
-  border-radius: 12px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.btn-modern:hover {
-  background: linear-gradient(135deg, #148149, #329d5d);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(27, 143, 90, 0.25);
-}
-
-/* 🌿 Enlaces */
-.text-green {
-  color: #1b8f5a;
   &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.brand-icon {
+  font-size: 3.2rem;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f9fafb;
+  margin-bottom: 0.4rem;
+}
+
+.login-subtitle {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.modern-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 transparent;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+.btn-modern {
+  width: 100%;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+  transition: all 0.4s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+    box-shadow: 0 15px 25px rgba(14, 165, 233, 0.5);
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.text-link {
+  color: #38bdf8;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #7dd3fc;
     text-decoration: underline;
   }
 }
 
-/* 🌈 Animaciones */
-@keyframes gradientShift {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes backgroundShift {
   0% {
     background-position: 0% 50%;
   }
@@ -87,13 +156,20 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
   }
-  to {
-    opacity: 1;
+  50% {
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.6);
+  }
+}
+
+@keyframes floatGlow {
+  0% {
     transform: translateY(0);
+  }
+  100% {
+    transform: translateY(50px);
   }
 }
