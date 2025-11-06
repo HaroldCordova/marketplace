@@ -1,9 +1,9 @@
-<div class="container mt-5">
-  <h2 class="text-center mb-4 text-primary">🛒 Tu Carrito de Compras</h2>
+<div class="carrito-container">
+  <div class="carrito-card">
+    <h2 class="titulo-carrito">🛍️ Tu Carrito de Compras</h2>
 
-  <div *ngIf="carrito.length > 0; else vacio">
-    <table class="table table-striped table-hover align-middle shadow-sm rounded">
-      <thead class="table-dark">
+    <table class="tabla-carrito">
+      <thead>
         <tr>
           <th>Producto</th>
           <th>Precio (S/)</th>
@@ -12,30 +12,38 @@
           <th>Acción</th>
         </tr>
       </thead>
+
       <tbody>
-        <tr *ngFor="let item of carrito; let i = index">
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.precio }}</td>
+        <tr *ngFor="let p of carrito; let i = index">
+          <td class="celda-nombre">{{ p.nombre }}</td>
+          <td>{{ p.precio | number:'1.2-2' }}</td>
           <td>
-            <input type="number" [(ngModel)]="item.cantidad" (change)="actualizarTotal()" min="1" class="form-control w-50">
+            <input
+              type="number"
+              min="1"
+              [(ngModel)]="p.cantidad"
+              (change)="actualizarTotal()"
+              (input)="actualizarTotal()"
+            />
           </td>
-          <td>{{ item.precio * item.cantidad | number:'1.2-2' }}</td>
+          <td>{{ (p.precio * p.cantidad) | number:'1.2-2' }}</td>
           <td>
-            <button class="btn btn-danger btn-sm" (click)="eliminarDelCarrito(i)">❌</button>
+            <button class="btn-eliminar" (click)="eliminarDelCarrito(i)">✕</button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <div class="d-flex justify-content-between align-items-center mt-4">
-      <h4>Total: <span class="text-success fw-bold">S/ {{ total | number:'1.2-2' }}</span></h4>
-      <button class="btn btn-success">Confirmar compra</button>
+    <div class="resumen">
+      <div class="total">
+        Total: <span>S/ {{ total | number:'1.2-2' }}</span>
+      </div>
+
+      <!-- Botón solo visual, sin (click) para evitar errores -->
+      <button class="btn-confirmar" [disabled]="!carrito.length">
+        Confirmar compra
+      </button>
     </div>
   </div>
-
-  <ng-template #vacio>
-    <div class="alert alert-warning text-center mt-4">
-      Tu carrito está vacío . <a routerLink="/marketplace">Explora productos aquí</a>.
-    </div>
-  </ng-template>
 </div>
+
