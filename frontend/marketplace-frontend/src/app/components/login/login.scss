@@ -97,3 +97,33 @@
     transform: translateY(0);
   }
 }
+/* 🧩 Cards de selección de rol */
+.role-card {
+  cursor: pointer;
+  width: 90px;
+  background-color: #f8f9fa;
+  transition: all 0.25s ease;
+  user-select: none;
+
+  &:hover {
+    background-color: #e9f2ff;
+    transform: translateY(-3px);
+    border-color: #007bff;
+  }
+
+  &.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056d2;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+
+    i {
+      color: #fff !important;
+    }
+  }
+
+  i {
+    transition: color 0.2s ease;
+  }
+}
+

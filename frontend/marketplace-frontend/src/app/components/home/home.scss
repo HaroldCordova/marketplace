@@ -1,13 +1,79 @@
-.banner {
+/* ===========================
+   🎨 Estilos principales HOME
+   =========================== */
+
+/* 🌈 Banner Profesional */
+.hero-banner {
   background: linear-gradient(135deg, #007bff, #00bcd4);
-  color: white;
-  text-align: left;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  border: none;
+
+  .row {
+    align-items: center;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    max-width: 600px;
+  }
+
+  .btn {
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    &:hover {
+      transform: translateY(-2px);
+      background: #e8f0fe;
+      color: #007bff;
+    }
+  }
+
+  .hero-image {
+    max-height: 220px;
+    opacity: 0.9;
+    animation: floatY 4s ease-in-out infinite alternate;
+  }
 }
 
-.categorias {
+@keyframes floatY {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+/* ===========================
+   🧭 Sidebar de Categorías
+   =========================== */
+
+.sticky-sidebar {
   position: sticky;
   top: 90px;
-  background-color: #fff;
+  align-self: flex-start;
+  background: #fff;
+  border-radius: 12px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.sticky-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sticky-sidebar::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
 }
 
 .list-group-item {
@@ -15,24 +81,140 @@
   border: none;
   border-bottom: 1px solid #f0f0f0;
   font-size: 0.95rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  &.active {
+    background-color: #e3f2fd;
+    color: #007bff;
+    font-weight: 600;
+  }
 }
 
-.list-group-item:hover {
-  background-color: #f9f9f9;
-  transition: 0.2s;
-}
-
-.list-group-item.active {
-  background-color: #e3f2fd;
-  color: #007bff;
-  font-weight: bold;
-}
+/* ===========================
+   🛍️ Tarjetas de Producto
+   =========================== */
 
 .producto-card {
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .img-container {
+    height: 220px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    padding: 1rem 1.2rem;
+  }
+
+  .card-title {
+    color: #212529;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .text-success {
+    font-weight: 600;
+  }
+
+  .btn {
+    border-radius: 8px;
+    font-weight: 500;
+  }
 }
 
-.producto-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+/* ===========================
+   🔹 Títulos de Sección
+   =========================== */
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  font-size: 1.25rem;
 }
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40%;
+  height: 3px;
+  border-radius: 3px;
+  background-color: #007bff;
+}
+
+/* ===========================
+   📱 Responsividad
+   =========================== */
+
+@media (max-width: 992px) {
+  .hero-banner {
+    padding: 2rem;
+    text-align: center;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+      max-width: none;
+    }
+
+    .hero-image {
+      display: none;
+    }
+  }
+
+  .sticky-sidebar {
+    position: relative;
+    top: auto;
+    max-height: none;
+    margin-bottom: 2rem;
+  }
+
+  .producto-card .img-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-banner {
+    padding: 1.5rem;
+  }
+
+  .producto-card {
+    .card-title {
+      font-size: 0.9rem;
+    }
+    .btn {
+      font-size: 0.85rem;
+    }
+  }
+}
+

@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <h3 class="fw-bold text-primary mb-4">🆕 Agregar Nuevo Producto</h3>
+
+  <form #form="ngForm" (ngSubmit)="guardarProducto()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Nombre del Producto</label>
+        <input type="text" class="form-control" [(ngModel)]="producto.nombre" name="nombre" required />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Precio (S/)</label>
+        <input type="number" class="form-control" [(ngModel)]="producto.precio" name="precio" required min="1" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Categoría</label>
+        <select class="form-select" [(ngModel)]="producto.categoria" name="categoria" required>
+          <option value="">Seleccionar...</option>
+          <option *ngFor="let c of categorias" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Stock disponible</label>
+        <input type="number" class="form-control" [(ngModel)]="producto.stock" name="stock" required min="0" />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label fw-semibold">Descripción</label>
+        <textarea rows="3" class="form-control" [(ngModel)]="producto.descripcion" name="descripcion"></textarea>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label fw-semibold">URL de la Imagen</label>
+        <input type="text" class="form-control" [(ngModel)]="producto.imagen" name="imagen" />
+      </div>
+    </div>
+
+    <div class="text-end mt-4">
+      <button class="btn btn-success px-4" type="submit">
+        <i class="bi bi-save"></i> Guardar Producto
+      </button>
+    </div>
+  </form>
+</div>
