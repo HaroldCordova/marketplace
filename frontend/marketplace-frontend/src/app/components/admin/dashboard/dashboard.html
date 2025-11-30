@@ -1,32 +1,291 @@
-<div class="container py-5">
-  <h2 class="fw-bold text-danger mb-4">⚙️ Panel del Administrador</h2>
+<div class="admin-layout" *ngIf="resumen; else cargandoTpl">
+  <div class="admin-header">
+    <div>
+      <h2>Panel de Administración</h2>
+      <p>Marketplace Local · Resumen general de usuarios, categorías y pagos retenidos.</p>
+    </div>
+    <button type="button" class="btn-session" disabled>
+      <i class="bi bi-shield-lock"></i>
+      Sesión de administrador
+    </button>
+  </div>
 
-  <div class="row text-center">
-    <div class="col-md-4 mb-3">
-      <div class="card shadow-sm p-3 border-danger">
-        <h5 class="text-muted">Usuarios Activos</h5>
-        <h3 class="fw-bold text-danger">{{ usuariosActivos }}</h3>
+  <!-- KPI CARDS -->
+  <div class="admin-kpis">
+    <!-- Usuarios activos -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-users">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Usuarios activos</span>
+        <span class="kpi-value">{{ resumen!.usuariosActivos }}</span>
+        <small>{{ resumen!.usuariosActivos }} cuentas habilitadas</small>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card shadow-sm p-3 border-danger">
-        <h5 class="text-muted">Categorías</h5>
-        <h3 class="fw-bold text-danger">{{ categorias }}</h3>
+
+    <!-- Categorías -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-categories">
+        <i class="bi bi-folder2-open"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Categorías</span>
+        <span class="kpi-value">{{ resumen!.categoriasActivas }}</span>
+        <small>Categorías visibles para publicar</small>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card shadow-sm p-3 border-danger">
-        <h5 class="text-muted">Reportes Pendientes</h5>
-        <h3 class="fw-bold text-danger">{{ reportesPendientes }}</h3>
+
+    <!-- Reportes -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-reports">
+        <i class="bi bi-flag-fill"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Reportes pendientes</span>
+        <span class="kpi-value text-danger">{{ resumen!.reportesPendientes }}</span>
+        <small>Pagos retenidos + envíos pendientes</small>
+      </div>
+    </div>
+
+    <!-- Monto retenido -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-money">
+        <i class="bi bi-cash-coin"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Monto retenido</span>
+        <span class="kpi-value">
+          S/ {{ resumen!.montoRetenido | number:'1.2-2' }}
+        </span>
+        <small>Saldo por liberar a vendedores</small>
+      </div>
+    </div>
+
+    <!-- Ganancia total -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-money">
+        <i class="bi bi-graph-up-arrow"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Ganancia total</span>
+        <span class="kpi-value">
+          S/ {{ resumen!.totalComisiones | number:'1.2-2' }}
+        </span>
+        <small>Comisiones acumuladas de todas las ventas</small>
+      </div>
+    </div>
+
+    <!-- Ganancia mes actual -->
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-money">
+        <i class="bi bi-calendar-week"></i>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Ganancia mes actual</span>
+        <span class="kpi-value">
+          S/ {{ resumen!.comisionesMesActual | number:'1.2-2' }}
+        </span>
+        <small>Comisiones de este mes</small>
       </div>
     </div>
   </div>
 
-  <hr class="my-4">
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="admin-content">
 
-  <div class="text-center">
-    <button class="btn btn-danger px-4 me-2">👥 Gestionar usuarios</button>
-    <button class="btn btn-outline-danger px-4 me-2">📂 Categorías</button>
-    <button class="btn btn-outline-dark px-4">📊 Ver reportes</button>
+    <!-- Columna izquierda -->
+    <div class="admin-main">
+      <!-- PAGOS RETENIDOS -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h5>Pagos retenidos por liberar</h5>
+            <small>Revisa los pagos que dependen de tu aprobación.</small>
+          </div>
+          <span class="badge-pill warning">
+            {{ pagos.length }} pendientes
+          </span>
+        </div>
+
+        <!-- Cargando pagos -->
+        <div class="card-body" *ngIf="cargandoPagos">
+          Cargando pagos...
+        </div>
+
+        <!-- Sin pagos -->
+        <div class="card-body" *ngIf="!cargandoPagos && pagos.length === 0">
+          <p class="empty-text">No hay pagos retenidos por el momento.</p>
+        </div>
+
+        <!-- Tabla pagos -->
+        <div class="card-body table-wrapper" *ngIf="!cargandoPagos && pagos.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Pedido</th>
+              <th>Comprador</th>
+              <th>Vendedor</th>
+              <th>Monto total</th>
+              <th>Monto vendedor</th>
+              <th>Estado</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of pagos">
+              <td>{{ p.id }}</td>
+              <td>#{{ p.pedidoId }}</td>
+              <td>{{ p.compradorId }}</td>
+              <td>{{ p.vendedorId }}</td>
+              <td>S/ {{ p.montoTotal | number:'1.2-2' }}</td>
+              <td>S/ {{ p.montoVendedor | number:'1.2-2' }}</td>
+              <td>
+                <span class="badge-pill warning" *ngIf="p.estado === 'retenido'">
+                  Retenido
+                </span>
+                <span class="badge-pill success" *ngIf="p.estado === 'liberado'">
+                  Liberado
+                </span>
+
+                <div class="mt-1 small">
+                  <span [class.text-green]="p.confirmadoComprador">
+                    🛒 Comprador: {{ p.confirmadoComprador ? 'OK' : 'Pendiente' }}
+                  </span><br />
+                  <span [class.text-green]="p.confirmadoVendedor">
+                    🏪 Vendedor: {{ p.confirmadoVendedor ? 'OK' : 'Pendiente' }}
+                  </span>
+                </div>
+              </td>
+
+              <td class="text-center">
+                <button
+                  class="btn-small success"
+                  (click)="liberarPago(p)"
+                  [disabled]="!p.confirmadoComprador || !p.confirmadoVendedor || p.liberadoAdmin"
+                >
+                  Liberar
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ENVIOS -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <div>
+            <h5>Envíos de pedidos</h5>
+            <small>Pedidos que están en proceso de envío y entrega.</small>
+          </div>
+          <span class="badge-pill info">
+            {{ envios.length }} envíos
+          </span>
+        </div>
+
+        <!-- Cargando envíos -->
+        <div class="card-body" *ngIf="cargandoEnvios">
+          Cargando envíos...
+        </div>
+
+        <!-- Sin envíos -->
+        <div class="card-body" *ngIf="!cargandoEnvios && envios.length === 0">
+          <p class="empty-text">No hay envíos pendientes por el momento.</p>
+        </div>
+
+        <!-- Tabla envíos -->
+        <div class="card-body table-wrapper" *ngIf="!cargandoEnvios && envios.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Pedido</th>
+              <th>Código verificación</th>
+              <th>Estado</th>
+              <th>Fecha envío</th>
+              <th>Fecha entrega</th>
+              <th>Confirmaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let e of envios">
+              <td>{{ e.id }}</td>
+              <td>#{{ e.pedidoId }}</td>
+              <td>{{ e.codigoVerificacion }}</td>
+              <td>
+                <span
+                  class="badge-pill"
+                  [ngClass]="{
+                    'warning': e.estado === 'pendiente',
+                    'info': e.estado === 'en_camino' || e.estado === 'enviado' || e.estado === 'en tránsito',
+                    'success': e.estado === 'entregado'
+                  }"
+                >
+                  {{ e.estado | titlecase }}
+                </span>
+              </td>
+              <td>{{ formatearFecha(e.fechaEnvio) }}</td>
+              <td>{{ formatearFecha(e.fechaEntrega) }}</td>
+              <td>
+                <div class="small">
+                  <span [class.text-green]="e.confirmadoComprador">
+                    🛒 Comprador: {{ e.confirmadoComprador ? 'OK' : 'Pendiente' }}
+                  </span><br />
+                  <span [class.text-green]="e.confirmadoVendedor">
+                    🏪 Vendedor: {{ e.confirmadoVendedor ? 'OK' : 'Pendiente' }}
+                  </span>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columna derecha: Resumen -->
+    <aside class="admin-side">
+      <div class="card">
+        <div class="card-body">
+          <h5>Resumen de pagos</h5>
+          <p class="muted">Pagos pendientes de liberar:</p>
+          <h3>{{ resumen!.pagosPendientes }} pagos</h3>
+
+          <p class="muted mt-2">Monto retenido estimado:</p>
+          <h4 class="text-green">
+            S/ {{ resumen!.montoRetenido | number:'1.2-2' }}
+          </h4>
+
+          <hr />
+
+          <p class="muted mt-2">Ganancia total por comisiones:</p>
+          <h5>
+            S/ {{ resumen!.totalComisiones | number:'1.2-2' }}
+          </h5>
+
+          <p class="muted mt-2">Ganancia de este mes:</p>
+          <h5>
+            S/ {{ resumen!.comisionesMesActual | number:'1.2-2' }}
+          </h5>
+
+          <hr />
+          <p class="muted small">
+            Libera pagos solo cuando el comprador haya confirmado la
+            recepción del producto y no exista ningún reclamo abierto.
+          </p>
+        </div>
+      </div>
+    </aside>
+
   </div>
 </div>
+
+<ng-template #cargandoTpl>
+  <div class="loading-wrapper">
+    Cargando panel de administración...
+  </div>
+</ng-template>

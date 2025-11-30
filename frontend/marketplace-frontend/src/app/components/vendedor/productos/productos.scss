@@ -1,0 +1,27 @@
+table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th {
+  font-weight: 600;
+  color: #495057;
+}
+
+td {
+  vertical-align: middle;
+}
+
+img.img-thumbnail {
+  border-radius: 10px;
+}
+
+.btn-outline-primary:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.btn-outline-danger:hover {
+  background: #dc3545;
+  color: #fff;
+}

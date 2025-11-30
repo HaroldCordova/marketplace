@@ -1,46 +1,248 @@
-<div class="d-flex vh-100">
-  <!-- 🟣 Panel lateral -->
-  <div class="sidebar bg-dark text-white p-3">
-    <h4 class="text-center mb-4">Vendedor</h4>
-    <ul class="nav flex-column">
-      <li class="nav-item" *ngFor="let item of menu">
-        <a [routerLink]="item.ruta" class="nav-link text-white d-flex align-items-center mb-2">
-          <i class="{{ item.icono }} me-2"></i>
-          <span>{{ item.titulo }}</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+<div class="vendor-page d-flex align-items-start justify-content-center">
+  <div class="vendor-container">
 
-  <!-- 🟢 Contenido principal -->
-  <div class="content flex-grow-1 p-4 bg-light overflow-auto">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h3 class="fw-bold text-primary">Panel de Vendedor</h3>
-      <button class="btn btn-outline-danger">Cerrar sesión</button>
+    <!-- Encabezado -->
+    <div class="mb-4">
+      <h2 class="fw-bold d-flex align-items-center gap-2">
+        <i class="bi bi-shop-window text-success"></i>
+        Panel del vendedor
+      </h2>
+      <p class="text-muted mb-0">
+        Bienvenido, <strong>{{ nombreVendedor }}</strong>. Desde aquí puedes gestionar tu tienda y tus productos.
+      </p>
     </div>
 
-    <!-- Tarjetas estadísticas -->
-    <div class="row mb-4">
-      <div class="col-md-4" *ngFor="let card of [
-        {icon:'bi-bag', title:'Ventas Hoy', value:'S/ 480'},
-        {icon:'bi-box', title:'Productos Activos', value:'12'},
-        {icon:'bi-cash-stack', title:'Ganancia Total', value:'S/ 3200'}
-      ]">
-        <div class="card shadow-sm border-0 rounded-4 p-3">
-          <div class="d-flex align-items-center">
-            <i class="{{card.icon}} fs-3 text-primary me-3"></i>
+    <!-- Info de tienda + resumen -->
+    <div class="row g-4 mb-4">
+      <!-- Info de tienda -->
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
             <div>
-              <h6 class="text-muted mb-1">{{ card.title }}</h6>
-              <h5 class="fw-bold">{{ card.value }}</h5>
+              <h5 class="card-title mb-1">
+                Estado de tu tienda
+              </h5>
+
+              <ng-container *ngIf="!cargandoTienda; else cargando">
+                <ng-container *ngIf="tienda; else sinTienda">
+                  <p class="mb-1">
+                    <strong>{{ tienda.nombre }}</strong>
+                  </p>
+                  <p class="text-muted mb-2">
+                    {{ tienda.descripcion || 'Sin descripción registrada.' }}
+                  </p>
+                </ng-container>
+                <ng-template #sinTienda>
+                  <p class="text-muted mb-2">
+                    Aún no has configurado tu tienda. Puedes hacerlo en la sección
+                    <strong>Formalízate y Mi Tienda</strong>.
+                  </p>
+                </ng-template>
+              </ng-container>
+
+              <ng-template #cargando>
+                <p class="text-muted mb-2">Cargando información de tu tienda...</p>
+              </ng-template>
             </div>
+
+            <div class="text-md-end mt-3 mt-md-0">
+              <span
+                *ngIf="tienda; else badgePendiente"
+                class="badge rounded-pill bg-success-subtle text-success px-3 py-2"
+              >
+                Tienda configurada
+              </span>
+              <ng-template #badgePendiente>
+                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis px-3 py-2">
+                  Tienda pendiente
+                </span>
+              </ng-template>
+
+              <div class="mt-2">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  (click)="irAFormalizate()"
+                >
+                  Gestionar tienda y formalización
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen rápido real -->
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">Resumen rápido</h6>
+
+            <ng-container *ngIf="!cargandoResumen && resumen; else resumenCargando">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Ventas del mes</span>
+                <span class="fw-semibold">
+                  S/ {{ resumen.ventasMes | number:'1.2-2' }}
+                </span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Productos publicados</span>
+                <span class="fw-semibold">
+                  {{ resumen.productosPublicados }}
+                </span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Pagos retenidos</span>
+                <span class="fw-semibold">
+                  {{ resumen.pedidosPendientes }}
+                </span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Envíos pendientes</span>
+                <span class="fw-semibold">
+                  {{ resumen.enviosPendientes }}
+                </span>
+              </div>
+            </ng-container>
+
+            <ng-template #resumenCargando>
+              <p class="text-muted mb-0">Cargando métricas...</p>
+            </ng-template>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 📘 Módulo Formalízate integrado -->
-    <app-formalizate></app-formalizate>
+    <!-- Tarjetas de navegación principal -->
+    <div class="row g-4">
+      <!-- Formalízate / Mi tienda -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-card" (click)="irAFormalizate()">
+          <div class="card-body">
+            <div class="icon-circle bg-success-subtle text-success mb-3">
+              <i class="bi bi-file-earmark-text"></i>
+            </div>
+            <h5 class="card-title">Formalízate y Mi tienda</h5>
+            <p class="card-text text-muted">
+              Configura los datos de tu tienda y revisa los pasos para formalizar tu negocio
+              ante SUNAT e INDECOPI.
+            </p>
+            <span class="text-primary fw-semibold small">
+              Ir a formalización <i class="bi bi-arrow-right-short"></i>
+            </span>
+          </div>
+        </div>
+      </div>
 
-    <router-outlet></router-outlet>
+      <!-- Mis productos -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-card" (click)="irAProductos()">
+          <div class="card-body">
+            <div class="icon-circle bg-primary-subtle text-primary mb-3">
+              <i class="bi bi-box-seam"></i>
+            </div>
+            <h5 class="card-title">Mis productos</h5>
+            <p class="card-text text-muted">
+              Revisa y administra todos los productos que ya tienes publicados en el marketplace.
+            </p>
+            <span class="text-primary fw-semibold small">
+              Ver productos <i class="bi bi-arrow-right-short"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nuevo producto -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-card" (click)="irANuevoProducto()">
+          <div class="card-body">
+            <div class="icon-circle bg-info-subtle text-info mb-3">
+              <i class="bi bi-plus-circle"></i>
+            </div>
+            <h5 class="card-title">Publicar nuevo producto</h5>
+            <p class="card-text text-muted">
+              Crea una nueva publicación con fotos, precio, stock y categoría para tus productos.
+            </p>
+            <span class="text-primary fw-semibold small">
+              Crear producto <i class="bi bi-arrow-right-short"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagos retenidos del vendedor -->
+    <div class="mt-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Pagos retenidos</h5>
+            <small class="text-muted">
+              Confirma los pedidos que ya enviaste para notificar al administrador.
+            </small>
+          </div>
+
+          <div *ngIf="cargandoPagos" class="text-muted">
+            Cargando pagos pendientes...
+          </div>
+
+          <div class="table-responsive" *ngIf="!cargandoPagos">
+            <table class="table align-middle mb-0">
+              <thead>
+                <tr>
+                  <th># Pedido</th>
+                  <th>Monto total</th>
+                  <th>Tú recibes</th>
+                  <th>Estado</th>
+                  <th>Confirmaciones</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of pagosPendientes">
+                  <td>#{{ p.pedidoId }}</td>
+                  <td>S/ {{ p.montoTotal | number:'1.2-2' }}</td>
+                  <td>S/ {{ p.montoVendedor | number:'1.2-2' }}</td>
+                  <td>
+                    <span class="badge bg-warning text-dark" *ngIf="p.estado === 'retenido'">Retenido</span>
+                    <span class="badge bg-success" *ngIf="p.estado === 'liberado'">Liberado</span>
+                  </td>
+                  <td class="small">
+                    <div>
+                      Comprador:
+                      <span [ngClass]="p.confirmadoComprador ? 'text-success' : 'text-muted'">
+                        {{ p.confirmadoComprador ? 'Confirmado' : 'Pendiente' }}
+                      </span>
+                    </div>
+                    <div>
+                      Tú:
+                      <span [ngClass]="p.confirmadoVendedor ? 'text-success' : 'text-muted'">
+                        {{ p.confirmadoVendedor ? 'Confirmado' : 'Pendiente' }}
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-success"
+                      [disabled]="p.confirmadoVendedor"
+                      (click)="confirmarPago(p)"
+                    >
+                      {{ p.confirmadoVendedor ? 'Confirmado' : 'Confirmar envío' }}
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="pagosPendientes.length === 0">
+                  <td colspan="6" class="text-center text-muted py-3">
+                    No tienes pagos retenidos por confirmar.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

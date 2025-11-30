@@ -1,0 +1,50 @@
+<div class="mis-pedidos-wrapper">
+  <h2>Mis pedidos</h2>
+
+  <p class="muted">
+    Aquí puedes ver tus pedidos pagados y confirmar la recepción del producto.
+  </p>
+
+  <div *ngIf="cargando">Cargando pedidos...</div>
+
+  <div *ngIf="!cargando && pagos.length === 0" class="empty">
+    No tienes pagos registrados todavía.
+  </div>
+
+  <div *ngIf="!cargando && pagos.length > 0" class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Pedido</th>
+          <th>Monto total</th>
+          <th>Estado pago</th>
+          <th>Confirmación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pagos">
+          <td>{{ p.id }}</td>
+          <td>#{{ p.pedidoId }}</td>
+          <td>S/ {{ p.montoTotal | number:'1.2-2' }}</td>
+          <td>{{ p.estado }}</td>
+          <td>
+            <span [ngClass]="p.confirmadoComprador ? 'badge-success' : 'badge-warning'">
+              {{ p.confirmadoComprador ? 'Confirmado' : 'Pendiente' }}
+            </span>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-success"
+              (click)="confirmarRecepcion(p)"
+              [disabled]="p.confirmadoComprador"
+            >
+              Confirmar recepción
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

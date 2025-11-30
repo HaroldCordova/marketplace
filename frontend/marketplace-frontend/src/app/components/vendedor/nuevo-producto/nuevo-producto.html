@@ -1,0 +1,235 @@
+<div class="nuevo-prod-bg">
+  <div class="container py-5 nuevo-prod-wrapper">
+
+    <!-- CABECERA -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <span class="badge badge-new me-2">
+          <i class="bi bi-stars me-1"></i> Nuevo
+        </span>
+        <h2 class="titulo-pagina mb-1">
+          Agregar Nuevo Producto
+        </h2>
+        <p class="subtitulo-pagina mb-0">
+          Publica un producto con buen título, precio claro e imagen atractiva.
+        </p>
+      </div>
+
+      <div class="text-end d-none d-md-block">
+        <span class="badge bg-dark-subtle text-light-emphasis small px-3 py-2 shadow-sm">
+          <i class="bi bi-box-seam me-1"></i>
+          Panel del vendedor
+        </span>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-start">
+
+      <!-- FORMULARIO PRINCIPAL -->
+      <div class="col-lg-8">
+        <div class="card form-card shadow-lg border-0">
+          <div class="card-body p-4 p-md-5">
+
+            <h5 class="fw-semibold mb-3">
+              <i class="bi bi-pencil-square me-2 text-primary"></i> Detalles del producto
+            </h5>
+
+            <form #form="ngForm" (ngSubmit)="guardarProducto()">
+
+              <div class="row g-3">
+
+                <!-- Nombre -->
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Nombre del Producto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control modern-input"
+                    [(ngModel)]="nombre"
+                    name="nombre"
+                    required
+                    maxlength="120"
+                    placeholder="Ej: Shampoo natural de romero"
+                  />
+                </div>
+
+                <!-- Precio -->
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">
+                    Precio (S/)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    class="form-control modern-input"
+                    [(ngModel)]="precio"
+                    name="precio"
+                    required
+                    min="1"
+                    step="0.1"
+                    placeholder="0.00"
+                  />
+                </div>
+
+                <!-- Stock -->
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">
+                    Stock disponible
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    class="form-control modern-input"
+                    [(ngModel)]="stock"
+                    name="stock"
+                    required
+                    min="0"
+                    placeholder="0"
+                  />
+                </div>
+
+                <!-- Categoría -->
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Categoría
+                    <span class="text-danger">*</span>
+                  </label>
+                  <select
+                    class="form-select modern-input"
+                    [(ngModel)]="categoriaId"
+                    name="categoriaId"
+                    required
+                  >
+                    <option [ngValue]="null" disabled selected>
+                      Selecciona una categoría...
+                    </option>
+                    <option *ngFor="let c of categorias" [ngValue]="c.id">
+                      {{ c.nombre }}
+                    </option>
+                  </select>
+                  <small class="text-muted small">
+                    Elige la categoría que mejor describa tu producto.
+                  </small>
+                </div>
+
+                <!-- URL Imagen -->
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    URL de la Imagen
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control modern-input"
+                    [(ngModel)]="imagenUrl"
+                    name="imagenUrl"
+                    placeholder="https://ejemplo.com/imagen.jpg"
+                  />
+                  <small class="text-muted small">
+                    Usa una imagen clara y en buena calidad.
+                  </small>
+                </div>
+
+                <!-- Descripción -->
+                <div class="col-12">
+                  <label class="form-label fw-semibold">
+                    Descripción
+                  </label>
+                  <textarea
+                    rows="4"
+                    class="form-control modern-input textarea-desc"
+                    [(ngModel)]="descripcion"
+                    name="descripcion"
+                    placeholder="Describe características, beneficios y modo de uso..."
+                  ></textarea>
+                </div>
+
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mt-4">
+                <small class="text-muted small">
+                  <span class="text-danger">*</span> Campos obligatorios
+                </small>
+
+                <button
+                  class="btn btn-gradient px-4 py-2 fw-semibold"
+                  type="submit"
+                  [disabled]="form.invalid"
+                >
+                  <i class="bi bi-cloud-upload me-2"></i>
+                  Publicar producto
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL LATERAL / PREVIEW -->
+      <div class="col-lg-4">
+
+        <!-- Preview del producto -->
+        <div class="card preview-card shadow border-0 mb-3">
+          <div class="card-header bg-transparent border-0 pb-0">
+            <small class="text-uppercase text-muted fw-semibold">
+              Vista previa
+            </small>
+          </div>
+
+          <div class="card-body">
+            <div class="preview-img mb-3">
+              <img
+                *ngIf="imagenUrl; else placeholderImg"
+                [src]="imagenUrl"
+                alt="Vista previa"
+                class="img-fluid rounded"
+              />
+              <ng-template #placeholderImg>
+                <div class="preview-placeholder d-flex flex-column align-items-center justify-content-center">
+                  <i class="bi bi-image fs-1 mb-2"></i>
+                  <span class="small text-muted">La imagen aparecerá aquí</span>
+                </div>
+              </ng-template>
+            </div>
+
+            <h6 class="mb-1">
+              {{ nombre || 'Nombre del producto' }}
+            </h6>
+            <p class="mb-1 text-muted small">
+              {{ descripcion || 'Aquí se verá una breve descripción del producto.' }}
+            </p>
+
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <span class="precio-preview">
+                S/ {{ precio || '0.00' }}
+              </span>
+              <span class="badge bg-soft-success text-success-emphasis">
+                Stock: {{ (stock != null ? stock : 0) }} unid.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="card tips-card shadow-sm border-0">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-2">
+              <i class="bi bi-lightbulb me-2 text-warning"></i>
+              Tips para vender mejor
+            </h6>
+            <ul class="list-unstyled small mb-0 text-muted">
+              <li class="mb-1">• Usa títulos claros y específicos.</li>
+              <li class="mb-1">• Sube una imagen nítida y bien iluminada.</li>
+              <li class="mb-1">• Detalla materiales, tamaño y beneficios.</li>
+              <li>• Revisa el precio de productos similares en el mercado.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

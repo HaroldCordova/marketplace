@@ -1,5 +1,14 @@
 <app-navbar></app-navbar>
 
-<div class="container mt-4">
+<main class="app-main container py-4">
   <router-outlet></router-outlet>
-</div>
+</main>
+
+<footer class="app-footer text-center py-3 bg-light text-muted mt-auto">
+  <small>© 2025 Marketplace Local · Hecho con ❤️ en Perú</small>
+</footer>
+
+<!-- Contenedor de toasts y loader global -->
+<app-toast-container></app-toast-container>
+<app-loader></app-loader>
+

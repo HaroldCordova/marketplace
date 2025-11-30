@@ -1,0 +1,112 @@
+/* Fondo general */
+.auth-page {
+  min-height: calc(100vh - 70px);
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: radial-gradient(circle at top left, #1a9c73 0, #07192f 40%, #020815 80%);
+}
+
+/* Tarjeta */
+.auth-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 1.75rem;
+  padding: 2.5rem 2.5rem 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Icono */
+.brand-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 0, #64ffda, #00c38a);
+  color: #ffffff;
+  font-size: 2.2rem;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* Inputs */
+.modern-input {
+  border-radius: 999px;
+  border: 1px solid #d5dce5;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
+
+  &:focus {
+    border-color: #00a874;
+    box-shadow: 0 0 0 0.16rem rgba(0, 168, 116, 0.2);
+    outline: none;
+  }
+}
+
+/* Botón principal */
+.auth-btn {
+  border-radius: 999px;
+  padding: 0.8rem;
+  font-size: 0.98rem;
+  border: none;
+  background: linear-gradient(90deg, #0099ff, #00c38a);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+
+  &:hover {
+    background: linear-gradient(90deg, #0080dd, #00a874);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Pills de rol */
+.role-pill {
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid #d5dce5;
+  background-color: #ffffff;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    border-color: #00a874;
+    background-color: #f4fffb;
+  }
+
+  &.active {
+    border-color: #00a874;
+    background-color: #e9fff7;
+    color: #00855f;
+    font-weight: 600;
+  }
+}
+
+/* Link login */
+.link-login {
+  color: #007ad9;
+
+  &:hover {
+    color: #005fa7;
+    text-decoration: underline;
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .auth-card {
+    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 1.25rem;
+  }
+
+  .brand-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.9rem;
+  }
+}

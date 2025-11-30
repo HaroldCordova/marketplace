@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.scss */
+
+/* Que el documento ocupe toda la altura y sin márgenes raros */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Fondo general de TODO el sitio */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* mismo gradiente que usamos en el login */
+  background: radial-gradient(
+    circle at 0 0,
+    #16a34a 0,
+    #0f172a 40%,
+    #020617 75%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* que el fondo no se mueva al hacer scroll */
+}

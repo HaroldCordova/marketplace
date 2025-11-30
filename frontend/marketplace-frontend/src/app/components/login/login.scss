@@ -1,45 +1,89 @@
-.login-wrapper {
-  background: linear-gradient(135deg, #f0f4ff, #e3f2fd);
+/* Fondo general de la página de login (ocupa todo el ancho) */
+.login-page {
+  min-height: calc(100vh - 70px); // resto por la altura aproximada del navbar
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: radial-gradient(circle at top left, #1a9c73 0, #07192f 40%, #020815 80%);
 }
 
+/* Tarjeta de login */
 .login-card {
-  width: 380px;
-  animation: fadeIn 0.6s ease;
-  border-radius: 18px;
-  background-color: #fff;
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 1.75rem;
+  padding: 2.5rem 2.5rem 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.input-group-text {
-  background-color: #f1f3f5;
-  border: none;
-  color: #007bff;
+/* Icono de la marca */
+.brand-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 0, #64ffda, #00c38a);
+  color: #ffffff;
+  font-size: 2.2rem;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
 }
 
-.form-control {
-  border-left: none;
+/* Inputs modernos */
+.modern-input {
+  border-radius: 999px;
+  border: 1px solid #d5dce5;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
+
   &:focus {
-    box-shadow: none;
-    border-color: #007bff;
+    border-color: #00a874;
+    box-shadow: 0 0 0 0.16rem rgba(0, 168, 116, 0.2);
+    outline: none;
   }
 }
 
-.btn-primary {
-  background-color: #007bff;
+/* Botón principal */
+.login-btn {
+  border-radius: 999px;
+  padding: 0.8rem;
+  font-size: 0.98rem;
   border: none;
-  transition: all 0.3s ease;
+  background: linear-gradient(90deg, #0099ff, #00c38a);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+
   &:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+    background: linear-gradient(90deg, #0080dd, #00a874);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+/* Link de crear cuenta */
+.link-create-account {
+  color: #00a874;
+
+  &:hover {
+    color: #00855f;
+    text-decoration: underline;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* Ajuste responsive */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 1.25rem;
+  }
+
+  .brand-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.9rem;
   }
 }

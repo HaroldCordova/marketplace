@@ -1,22 +1,228 @@
-.card {
-  background-color: #ffffff;
+/* ===========================
+   FONDO GENERAL
+   =========================== */
+.formalizate-page {
+  min-height: calc(100vh - 80px);
+  padding: 2.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: radial-gradient(circle at top left, #22c55e 0, #0b1120 40%, #020617 100%);
 }
 
-.progress {
-  background-color: #e9ecef;
-  border-radius: 10px;
+/* Card principal tipo “glass” */
+.formalizate-card {
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 26px;
+  padding: 2.5rem 2.3rem 2.2rem;
+  background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.16), rgba(15, 23, 42, 0.96));
+  box-shadow:
+    0 20px 55px rgba(15, 23, 42, 0.85),
+    0 0 0 1px rgba(148, 163, 184, 0.18);
+  color: #e5e7eb;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem 1.8rem;
+  }
+
+  h2 {
+    color: #f9fafb;
+  }
+
+  .text-muted {
+    color: #9ca3af !important;
+  }
 }
 
-.progress-bar {
-  font-weight: 600;
+/* Card interno de la izquierda (form tienda) */
+.formalizate-card .card {
+  background: rgba(15, 23, 42, 0.96);
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #e5e7eb;
 }
 
-.list-group-item {
+.formalizate-card .form-label,
+.formalizate-card label,
+.formalizate-card small {
+  color: #e5e7eb;
+}
+
+/* Inputs “modernos” */
+.formalizate-card .form-control,
+.formalizate-card textarea {
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  color: #e5e7eb;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+
+  &:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+    background: #020617;
+    color: #f9fafb;
+  }
+
+  &::placeholder {
+    color: #6b7280;
+  }
+}
+
+/* Botón principal */
+.formalizate-btn {
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
-  border-bottom: 1px solid #f1f1f1;
-  transition: all 0.2s ease;
+  box-shadow: 0 12px 24px rgba(22, 163, 74, 0.55);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 32px rgba(22, 163, 74, 0.7);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 10px 18px rgba(22, 163, 74, 0.45);
+  }
 }
 
-.list-group-item:hover {
-  background-color: #f8f9fa;
+/* ALERTA de estado de tienda */
+.alert-light {
+  border-radius: 18px;
+  background: rgba(248, 250, 252, 0.98);
+  color: #0f172a;
+
+  .badge {
+    font-size: 0.75rem;
+  }
+}
+
+/* =============================
+   BLOQUE DERECHA – GUÍA
+   ============================= */
+.formalizacion-guide {
+  border-radius: 22px;
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.40), transparent 55%),
+              radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.40), transparent 55%),
+              #020617;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+
+  .card-body {
+    color: #e5e7eb;
+  }
+
+  h5 {
+    color: #f9fafb;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+  }
+
+  .text-muted {
+    color: #cbd5f5 !important;
+  }
+}
+
+/* Lista de pasos */
+.pasos-wrapper {
+  margin-top: 0.75rem;
+}
+
+/* Item de paso */
+.paso-item {
+  border-radius: 18px;
+  margin-bottom: 0.55rem;
+  border: 1px solid transparent;
+  background: rgba(15, 23, 42, 0.92);
+  color: #e5e7eb;
+  padding: 0.85rem 1rem;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.08s ease,
+    box-shadow 0.12s ease;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.99);
+    border-color: rgba(59, 130, 246, 0.75);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.85);
+  }
+
+  &.completed {
+    border-color: rgba(34, 197, 94, 0.9);
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.20), rgba(15, 23, 42, 0.96));
+    box-shadow: 0 16px 32px rgba(22, 163, 74, 0.5);
+
+    .icon-circle {
+      background: rgba(22, 163, 74, 0.20);
+      color: #bbf7d0;
+    }
+
+    .paso-title {
+      color: #bbf7d0;
+    }
+  }
+}
+
+/* Icono de cada paso */
+.icon-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #7dd3fc;
+  flex-shrink: 0;
+}
+
+/* Título del paso */
+.paso-title {
+  font-size: 0.95rem;
+}
+
+/* Link a SUNAT/INDECOPI */
+.link-sunat {
+  color: #7dd3fc;
+
+  &:hover {
+    text-decoration: underline;
+    color: #38bdf8;
+  }
+}
+
+/* Ajuste switches sobre fondo oscuro */
+.formalizacion-guide .form-check-input {
+  cursor: pointer;
+  background-color: #020617;
+  border-color: #4b5563;
+
+  &:checked {
+    background-color: #22c55e;
+    border-color: #22c55e;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.18rem rgba(34, 197, 94, 0.35);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formalizate-card {
+    border-radius: 0;
+  }
+
+  .formalizacion-guide {
+    margin-top: 1.25rem;
+  }
 }

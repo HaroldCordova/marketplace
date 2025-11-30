@@ -1,19 +1,124 @@
-<div class="container mt-5">
-  <h2 class="text-center text-primary mb-4">🛍️ Productos disponibles</h2>
+<div class="home-bg pb-5">
+  <div class="container py-4">
 
-  <div class="row g-4">
-    <div class="col-md-4" *ngFor="let p of productos">
-      <div class="card h-100 shadow-sm">
-        <img [src]="p.imagen" class="card-img-top" alt="{{p.nombre}}">
-        <div class="card-body">
-          <h5 class="card-title">{{ p.nombre }}</h5>
-          <p class="card-text text-muted">{{ p.descripcion }}</p>
-          <p class="fw-bold text-success">S/ {{ p.precio }}</p>
-          <button class="btn btn-primary w-100" (click)="agregarAlCarrito(p)">
-            Agregar al carrito 🛒
-          </button>
+    <!-- CABECERA: Título + buscador + carrito -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <h2 class="text-white mb-0">
+          <i class="bi bi-bag-check-fill me-2 text-info"></i>
+          Marketplace
+        </h2>
+        <small class="text-white-50">
+          Explora productos de emprendedores locales y añádelos a tu carrito.
+        </small>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+
+        <!-- Buscar -->
+        <div class="input-group">
+          <span class="input-group-text bg-white border-0">
+            <i class="bi bi-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Buscar producto..."
+            [(ngModel)]="textoBusqueda"
+            (ngModelChange)="aplicarFiltros()"
+          />
         </div>
+
+        <!-- Ordenar -->
+        <div class="input-group">
+          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Ordenar
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" (click)="cambiarOrden('relevancia')">
+                Relevancia
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="cambiarOrden('precio-asc')">
+                Precio: menor a mayor
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="cambiarOrden('precio-desc')">
+                Precio: mayor a menor
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Botón carrito -->
+        <button class="btn btn-outline-light position-relative" (click)="irAlCarrito()">
+          <i class="bi bi-cart3 me-1"></i>
+          Carrito
+          <span
+            *ngIf="cantidadCarrito > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ cantidadCarrito }}
+          </span>
+        </button>
       </div>
     </div>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div class="row g-3">
+      <div
+        class="col-6 col-md-4 col-lg-3"
+        *ngFor="let p of productosFiltrados"
+      >
+        <div class="card producto-card h-100 shadow-sm">
+          <div class="producto-img-wrapper" (click)="verDetalle(p)">
+            <img
+              [src]="p.imagen || 'assets/img/producto-placeholder.jpg'"
+              class="card-img-top"
+              alt="{{ p.nombre }}"
+            />
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h6 class="card-title text-truncate mb-1">
+              {{ p.nombre }}
+            </h6>
+            <p class="text-muted small mb-2 text-truncate">
+              {{ p.descripcion }}
+            </p>
+            <p class="card-price mb-1 text-success fw-semibold">
+              S/ {{ p.precio | number : '1.2-2' }}
+            </p>
+            <p class="card-stock mb-2 text-muted small">
+              Stock: {{ p.stock }}
+            </p>
+
+            <div class="mt-auto d-grid gap-1">
+              <button
+                class="btn btn-sm btn-primary"
+                (click)="agregarAlCarrito(p)"
+              >
+                <i class="bi bi-cart-plus me-1"></i>
+                Añadir
+              </button>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                (click)="verDetalle(p)"
+              >
+                Ver detalle
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIN PRODUCTOS -->
+      <div *ngIf="productosFiltrados.length === 0" class="text-center text-white-50 py-4">
+        No se encontraron productos para tu búsqueda.
+      </div>
+    </div>
+
   </div>
 </div>
