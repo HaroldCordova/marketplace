@@ -1,220 +1,154 @@
-/* ===========================
-   🎨 Estilos principales HOME
-   =========================== */
-
-/* 🌈 Banner Profesional */
-.hero-banner {
-  background: linear-gradient(135deg, #007bff, #00bcd4);
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-  border: none;
-
-  .row {
-    align-items: center;
-  }
-
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-
-  p {
-    font-size: 1.1rem;
-    opacity: 0.95;
-    max-width: 600px;
-  }
-
-  .btn {
-    font-weight: 600;
-    border-radius: 12px;
-    transition: all 0.2s ease;
-    &:hover {
-      transform: translateY(-2px);
-      background: #e8f0fe;
-      color: #007bff;
-    }
-  }
-
-  .hero-image {
-    max-height: 220px;
-    opacity: 0.9;
-    animation: floatY 4s ease-in-out infinite alternate;
-  }
+.home-bg {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #16a085 0, #020617 45%, #020617 100%);
 }
 
-@keyframes floatY {
-  from {
-    transform: translateY(0px);
-  }
-  to {
-    transform: translateY(-8px);
-  }
-}
-
-/* ===========================
-   🧭 Sidebar de Categorías
-   =========================== */
-
-.sticky-sidebar {
-  position: sticky;
-  top: 90px;
-  align-self: flex-start;
-  background: #fff;
-  border-radius: 12px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
-}
-
-.sticky-sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-.sticky-sidebar::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 10px;
-}
-
-.list-group-item {
-  cursor: pointer;
-  border: none;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 0.95rem;
-  transition: background 0.2s ease;
-
-  &:hover {
-    background-color: #f8f9fa;
-  }
-
-  &.active {
-    background-color: #e3f2fd;
-    color: #007bff;
-    font-weight: 600;
-  }
-}
-
-/* ===========================
-   🛍️ Tarjetas de Producto
-   =========================== */
-
-.producto-card {
+/* CATEGORÍAS LATERALES */
+.home-card-categorias {
   border-radius: 16px;
   overflow: hidden;
-  background: #fff;
+}
+
+.home-card-categorias .card-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.categoria-item {
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+
+.categoria-item:hover {
+  background-color: #eef2ff;
+  color: #1d4ed8;
+  padding-left: 10px;
+}
+
+/* HERO */
+.hero-card {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 35%, #0f172a 100%);
+  color: #fff;
   border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  }
-
-  .img-container {
-    height: 220px;
-    overflow: hidden;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-  }
-
-  &:hover img {
-    transform: scale(1.05);
-  }
-
-  .card-body {
-    padding: 1rem 1.2rem;
-  }
-
-  .card-title {
-    color: #212529;
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .text-success {
-    font-weight: 600;
-  }
-
-  .btn {
-    border-radius: 8px;
-    font-weight: 500;
-  }
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
 }
 
-/* ===========================
-   🔹 Títulos de Sección
-   =========================== */
+.hero-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+}
 
+.hero-subtitle {
+  font-size: 1rem;
+  max-width: 460px;
+}
+
+.hero-illustration {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-icon {
+  font-size: 4rem;
+  color: #facc15; // amarillo carrito
+}
+
+/* SECCIONES / TITULOS */
 .section-title {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 4px;
-  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-.section-title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 40%;
-  height: 3px;
-  border-radius: 3px;
-  background-color: #007bff;
+/* PRODUCTOS DESTACADOS */
+.producto-card {
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 16px;
+  color: #f9fafb;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-/* ===========================
-   📱 Responsividad
-   =========================== */
-
-@media (max-width: 992px) {
-  .hero-banner {
-    padding: 2rem;
-    text-align: center;
-
-    h2 {
-      font-size: 1.8rem;
-    }
-
-    p {
-      font-size: 1rem;
-      max-width: none;
-    }
-
-    .hero-image {
-      display: none;
-    }
-  }
-
-  .sticky-sidebar {
-    position: relative;
-    top: auto;
-    max-height: none;
-    margin-bottom: 2rem;
-  }
-
-  .producto-card .img-container {
-    height: 200px;
-  }
+.producto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.6);
+  border-color: #60a5fa;
 }
 
-@media (max-width: 576px) {
-  .hero-banner {
+.producto-img-wrapper {
+  cursor: pointer;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  background: #0b1120;
+}
+
+.producto-img-wrapper img {
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-price {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.card-stock {
+  font-size: 0.85rem;
+}
+
+/* BLOQUE "VENDE Y COMISIONA" */
+.vende-section {
+  margin-top: 3rem;
+}
+
+/* tarjetas de pasos */
+.step-card {
+  background: linear-gradient(145deg, #1e293b, #020617);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 18px;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #22c55e;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* DIFERENCIALES */
+.diferencia-card {
+  border-radius: 18px;
+}
+
+.diferencia-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 1.4rem;
+}
+
+/* Responsive pequeño */
+@media (max-width: 767.98px) {
+  .hero-card {
     padding: 1.5rem;
   }
 
-  .producto-card {
-    .card-title {
-      font-size: 0.9rem;
-    }
-    .btn {
-      font-size: 0.85rem;
-    }
+  .hero-title {
+    font-size: 1.8rem;
   }
 }
-

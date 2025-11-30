@@ -1,205 +1,89 @@
-.login-container {
-  height: 100vh;
+/* Fondo general de la página de login (ocupa todo el ancho) */
+.login-page {
+  min-height: calc(100vh - 70px); // resto por la altura aproximada del navbar
+  padding: 3rem 1rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 20% 30%, #0ea5e9, transparent 40%),
-              radial-gradient(circle at 80% 70%, #22c55e, transparent 40%),
-              linear-gradient(135deg, #0f172a, #1e293b);
-  background-size: 200% 200%;
-  animation: backgroundShift 12s ease infinite;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-  position: relative;
-}
-
-.login-container::before {
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 70%);
-  top: -100px;
-  left: -150px;
-  filter: blur(100px);
-  animation: floatGlow 10s ease-in-out infinite alternate;
-}
-
-.login-box {
-  position: relative;
-  z-index: 2;
-  width: 420px;
-  padding: 3rem 2.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.4s ease;
-  animation: fadeIn 0.8s ease-out;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-  }
-}
-
-.brand-icon {
-  font-size: 3.2rem;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.15);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem auto;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
-  animation: pulseGlow 2.5s ease-in-out infinite;
+
+  background: radial-gradient(circle at top left, #1a9c73 0, #07192f 40%, #020815 80%);
 }
 
-.login-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #f9fafb;
-  margin-bottom: 0.4rem;
-}
-
-.login-subtitle {
-  color: #9ca3af;
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-}
-
-.modern-input {
+/* Tarjeta de login */
+.login-card {
   width: 100%;
-  padding: 0.85rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  color: #e2e8f0;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-  box-shadow: inset 0 0 0 transparent;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 1.75rem;
+  padding: 2.5rem 2.5rem 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
 
-  &::placeholder {
-    color: #94a3b8;
-  }
+/* Icono de la marca */
+.brand-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 0, #64ffda, #00c38a);
+  color: #ffffff;
+  font-size: 2.2rem;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* Inputs modernos */
+.modern-input {
+  border-radius: 999px;
+  border: 1px solid #d5dce5;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
 
   &:focus {
+    border-color: #00a874;
+    box-shadow: 0 0 0 0.16rem rgba(0, 168, 116, 0.2);
     outline: none;
-    border-color: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-    transform: scale(1.02);
   }
 }
 
-.btn-modern {
-  width: 100%;
-  background: linear-gradient(135deg, #2563eb, #38bdf8);
-  color: #ffffff;
+/* Botón principal */
+.login-btn {
+  border-radius: 999px;
+  padding: 0.8rem;
+  font-size: 0.98rem;
   border: none;
-  border-radius: 14px;
-  padding: 0.9rem;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
-  transition: all 0.4s ease;
-  cursor: pointer;
+  background: linear-gradient(90deg, #0099ff, #00c38a);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 
   &:hover {
-    background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
-    box-shadow: 0 15px 25px rgba(14, 165, 233, 0.5);
-    transform: translateY(-3px);
+    background: linear-gradient(90deg, #0080dd, #00a874);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: translateY(1px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
   }
 }
 
-.text-link {
-  color: #38bdf8;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.3s ease;
+/* Link de crear cuenta */
+.link-create-account {
+  color: #00a874;
 
   &:hover {
-    color: #7dd3fc;
+    color: #00855f;
     text-decoration: underline;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* Ajuste responsive */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 1.25rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .brand-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.9rem;
   }
 }
-
-@keyframes backgroundShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.6);
-  }
-}
-
-@keyframes floatGlow {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(50px);
-  }
-}
-/* 🧩 Cards de selección de rol */
-.role-card {
-  cursor: pointer;
-  width: 90px;
-  background-color: #f8f9fa;
-  transition: all 0.25s ease;
-  user-select: none;
-
-  &:hover {
-    background-color: #e9f2ff;
-    transform: translateY(-3px);
-    border-color: #007bff;
-  }
-
-  &.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #0056d2;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-
-    i {
-      color: #fff !important;
-    }
-  }
-
-  i {
-    transition: color 0.2s ease;
-  }
-}
-

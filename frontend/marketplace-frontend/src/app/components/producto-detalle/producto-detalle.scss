@@ -1,17 +1,51 @@
+.producto-page {
+  min-height: calc(100vh - 80px);
+  padding: 3rem 1rem;
+  background: radial-gradient(circle at top left, #22c55e 0, #0f172a 40%, #020617 100%);
+}
+
+.producto-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #f9fafb;
+}
+
 .detalle-imagen {
-  max-height: 400px;
+  max-height: 430px;
   object-fit: contain;
 }
 
-button {
-  font-size: 1rem;
+.producto-titulo {
+  font-size: 2rem;
 }
 
-.card {
-  transition: transform 0.2s, box-shadow 0.2s;
+.descripcion {
+  color: #e5e7eb;
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+/* TEXTO CATEGORÍA ("TECNOLOGÍA") EN BLANCO */
+.categoria-label {
+  color: #ffffff;
+  opacity: 0.9;
+  letter-spacing: 0.08em;
+}
+
+/* TEXTO DE STOCK EN BLANCO */
+.stock-label {
+  color: #ffffff;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.producto-card {
+  border: none;
+  background: #020617;
+  color: #f9fafb;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
 }

@@ -1,39 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ProductoService, Producto } from '../../../services/producto';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-productos-vendedor',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './productos.html',
   styleUrls: ['./productos.scss']
 })
-export class ProductosVendedor {
-  productos = [
-    {
-      nombre: 'Bolso artesanal de cuero',
-      precio: 150,
-      stock: 10,
-      categoria: 'Moda y Accesorios',
-      imagen: 'http://3.bp.blogspot.com/-Dy_c5oZHuLU/TdaQKo7s5kI/AAAAAAAAApA/bsFnqiSsBOs/s1600/Doc+suela-azulino.jpg'
-    },
-    {
-      nombre: 'Taza pintada a mano',
-      precio: 40,
-      stock: 25,
-      categoria: 'Artesanías',
-      imagen: 'https://i.etsystatic.com/24345586/r/il/f4c017/2484000351/il_1588xN.2484000351_lr2x.jpg'
-    }
-  ];
+export class ProductosVendedor implements OnInit {
 
-  editarProducto(producto: any) {
-    alert(`Editar: ${producto.nombre}`);
+  productos: Producto[] = [];
+  cargando = true;
+
+  constructor(
+    private productoService: ProductoService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    const vendedorId = this.auth.userId;
+    if (!vendedorId) {
+      // Si no hay sesión, regresamos al login
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.productoService.getProductosVendedor(vendedorId).subscribe({
+      next: (data) => {
+        this.productos = data;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.cargando = false;
+      }
+    });
   }
 
-  eliminarProducto(producto: any) {
-    if (confirm(`¿Deseas eliminar "${producto.nombre}"?`)) {
-      this.productos = this.productos.filter(p => p !== producto);
-    }
+  nuevoProducto() {
+    this.router.navigate(['/vendedor/nuevo']);
+  }
+
+  editarProducto(p: Producto) {
+    // Aquí más adelante puedes navegar a pantalla de edición
+    // this.router.navigate(['/vendedor/editar', p.id]);
+  }
+
+  eliminarProducto(p: Producto) {
+    if (!confirm(`¿Eliminar el producto "${p.nombre}"?`)) return;
+
+    this.productoService.eliminarProducto(p.id).subscribe({
+      next: () => {
+        this.productos = this.productos.filter(x => x.id !== p.id);
+      },
+      error: (err) => console.error(err)
+    });
   }
 }

@@ -1,73 +1,86 @@
-import { Component } from '@angular/core';
+// src/app/components/home/home.ts
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { ProductoService, Producto } from '../../services/producto';
+import { CategoriaService, Categoria } from '../../services/categoria';
+import { CarritoService } from '../../services/carrito';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
-export class Home {
- categorias = [
-    { nombre: 'Moda y Accesorios', icono: 'bi-bag-fill' },
-    { nombre: 'Tecnología', icono: 'bi-laptop' },
-    { nombre: 'Hogar y Cocina', icono: 'bi-house-heart-fill' },
-    { nombre: 'Artesanías', icono: 'bi-brush-fill' },
-    { nombre: 'Salud y Belleza', icono: 'bi-heart-pulse-fill' },
-    { nombre: 'Niños y Juguetes', icono: 'bi-emoji-smile-fill' },
-    { nombre: 'Servicios Locales', icono: 'bi-tools' }
-  ];
+export class Home implements OnInit {
 
-  productosDestacados = [
+  categorias: Categoria[] = [];
+  productosDestacados: Producto[] = [];
+
+  diferenciales = [
     {
-      id: 1,
-      nombre: 'Bolso artesanal de cuero',
-      precio: 150,
-      imagen: 'http://3.bp.blogspot.com/-Dy_c5oZHuLU/TdaQKo7s5kI/AAAAAAAAApA/bsFnqiSsBOs/s1600/Doc+suela-azulino.jpg',
-      categoria: 'Moda y Accesorios'
+      icono: 'bi bi-truck',
+      titulo: 'Envíos a nivel nacional',
+      descripcion: 'Tus productos pueden llegar a clientes de todo el país.'
     },
     {
-      id: 2,
-      nombre: 'Taza de cerámica pintada a mano',
-      precio: 40,
-      imagen: 'https://i.etsystatic.com/24345586/r/il/f4c017/2484000351/il_1588xN.2484000351_lr2x.jpg',
-      categoria: 'Artesanías'
+      icono: 'bi bi-shield-check',
+      titulo: 'Pagos protegidos',
+      descripcion: 'El pago se libera solo cuando se confirma la entrega.'
     },
     {
-      id: 3,
-      nombre: 'Pulsera tejida artesanal',
-      precio: 25,
-      imagen: 'https://i.pinimg.com/originals/c6/be/f8/c6bef8f3bbd6e3e8ad40625d903349c1.jpg',
-      categoria: 'Moda y Accesorios'
+      icono: 'bi bi-bag-heart',
+      titulo: 'Apoyo al emprendedor',
+      descripcion: 'Diseñado para pequeños negocios y productores locales.'
     },
     {
-      id: 4,
-      nombre: 'Lámpara decorativa de bambú',
-      precio: 90,
-      imagen: 'https://tse2.mm.bing.net/th/id/OIP.oK8DRr5ujp_EdGPrP4qeigHaHa?pid=Api&P=0&h=180',
-      categoria: 'Hogar y Cocina'
-    },
-    {
-      id: 5,
-      nombre: 'Shampoo natural de romero',
-      precio: 35,
-      imagen: 'https://media.sube.la/media/12914/products/vowdsbxNmw.jpg',
-      categoria: 'Salud y Belleza'
+      icono: 'bi bi-bar-chart-line',
+      titulo: 'Comisiones claras',
+      descripcion: 'Modelo de comisiones transparente y sin letras pequeñas.'
     }
   ];
-    categoriaSeleccionada: string = 'Todos';
 
-  seleccionarCategoria(categoria: string) {
-    this.categoriaSeleccionada = categoria;
-  }
+  constructor(
+    private productoService: ProductoService,
+    private categoriaService: CategoriaService,
+    private carrito: CarritoService,
+    private toast: ToastService,
+    public router: Router          // 👈 AHORA ES PUBLIC
+  ) {}
 
-  obtenerProductosFiltrados() {
-    if (this.categoriaSeleccionada === 'Todos') {
-      return this.productosDestacados;
+  ngOnInit(): void {
+  this.categoriaService.getCategorias().subscribe({
+    next: (c) => (this.categorias = c)
+  });
+
+  this.productoService.getProductos().subscribe({
+    next: (prods) => {
+      console.log('Productos desde API:', prods);  // 👈 agrega esto
+      this.productosDestacados = prods.slice(0, 8);
+    },
+    error: (err) => {
+      console.error('Error cargando productos', err);
     }
-    return this.productosDestacados.filter(p => p.categoria === this.categoriaSeleccionada);
+  });
+}
+
+  filtrarPorCategoria(cat: Categoria) {
+    this.router.navigate(['/marketplace'], { queryParams: { categoriaId: cat.id } });
   }
 
+  agregarAlCarrito(p: Producto) {
+    this.carrito.agregarProducto(
+      p.id,
+      p.nombre,
+      p.precio,
+      p.imagen
+    );
+    this.toast.success('Producto añadido al carrito');
+  }
+
+  verDetalle(p: Producto) {
+    this.router.navigate(['/producto', p.id]);
+  }
 }

@@ -1,36 +1,112 @@
-<div class="container py-4" *ngIf="producto">
-  <div class="row">
-    <!-- Imagen -->
-    <div class="col-md-6 text-center">
-      <img [src]="producto.imagen" alt="{{ producto.nombre }}" class="img-fluid rounded shadow-lg detalle-imagen">
-    </div>
+<div class="producto-page" *ngIf="!cargandoProducto && producto">
+  <div class="producto-container">
 
-    <!-- Detalle -->
-    <div class="col-md-6">
-      <h3 class="fw-bold">{{ producto.nombre }}</h3>
-      <p class="text-muted">{{ producto.categoria }}</p>
-      <h4 class="text-success fw-bold mb-3">S/ {{ producto.precio }}</h4>
-      <p class="lead">{{ producto.descripcion }}</p>
+    <div class="row align-items-start g-4">
+      <!-- Imagen principal -->
+      <div class="col-lg-6 text-center mb-4 mb-lg-0">
+        <img
+          [src]="imagenPrincipal"
+          [alt]="producto?.nombre"
+          class="detalle-imagen img-fluid rounded shadow-lg"
+        />
+      </div>
 
-      <button class="btn btn-primary px-4 mt-3" (click)="agregarAlCarrito()">
-        🛒 Agregar al carrito
-      </button>
-    </div>
-  </div>
+      <!-- Info principal -->
+      <div class="col-lg-6">
+        <!-- CATEGORÍA EN BLANCO -->
+        <p class="text-uppercase small categoria-label mb-1">
+          {{ nombreCategoria }}
+        </p>
 
-  <hr class="my-5" />
+        <h2 class="producto-titulo fw-bold mb-2">
+          {{ producto?.nombre }}
+        </h2>
 
-  <!-- Recomendaciones -->
-  <h5 class="mb-3">🧡 Productos similares</h5>
-  <div class="row">
-    <div class="col-md-3 mb-4" *ngFor="let item of productos | slice:0:4">
-      <div class="card h-100 shadow-sm">
-        <img [src]="item.imagen" class="card-img-top" alt="{{ item.nombre }}">
-        <div class="card-body">
-          <h6 class="card-title">{{ item.nombre }}</h6>
-          <p class="text-success fw-semibold">S/ {{ item.precio }}</p>
+        <h3 class="text-success fw-bold mb-3">
+          S/ {{ producto?.precio | number:'1.2-2' }}
+        </h3>
+
+        <p class="descripcion lead mb-4">
+          {{ producto?.descripcion }}
+        </p>
+
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="input-group input-group-sm" style="max-width: 160px;">
+            <span class="input-group-text">Cantidad</span>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="cantidad"
+              name="cantidad"
+              min="1"
+              [max]="producto?.stock || 99"
+            />
+          </div>
+
+          <!-- STOCK EN BLANCO -->
+          <small class="stock-label">
+            Stock disponible: {{ producto?.stock }}
+          </small>
         </div>
+
+        <button
+          class="btn btn-primary btn-lg px-4"
+          (click)="agregarAlCarrito()"
+        >
+          <i class="bi bi-cart-plus me-1"></i>
+          Agregar al carrito
+        </button>
       </div>
     </div>
+
+    <hr class="my-5" />
+
+    <!-- Productos similares -->
+    <section>
+      <h5 class="mb-3">
+        <i class="bi bi-heart-fill text-danger me-1"></i>
+        Productos similares
+      </h5>
+
+      <div *ngIf="cargandoSimilares" class="text-muted small">
+        Cargando productos similares...
+      </div>
+
+      <div class="row g-3" *ngIf="!cargandoSimilares">
+        <div
+          class="col-sm-6 col-md-4 col-lg-3"
+          *ngFor="let item of similares"
+        >
+          <a
+            [routerLink]="['/producto', item.id]"
+            class="card h-100 text-decoration-none producto-card"
+          >
+            <img
+              [src]="item.imagen || item.imagenUrl"
+              [alt]="item.nombre"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <h6 class="card-title mb-1">{{ item.nombre }}</h6>
+              <small class="text-muted d-block mb-1">
+                {{ item.nombreCategoria || item.categoriaNombre }}
+              </small>
+              <span class="text-success fw-semibold">
+                S/ {{ item.precio | number:'1.2-2' }}
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
+</div>
+
+<!-- Estado de carga -->
+<div
+  class="producto-page d-flex align-items-center justify-content-center"
+  *ngIf="cargandoProducto"
+>
+  <p class="text-muted mb-0">Cargando producto...</p>
 </div>

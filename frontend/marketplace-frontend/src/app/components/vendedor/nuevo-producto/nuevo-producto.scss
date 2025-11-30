@@ -1,0 +1,159 @@
+.nuevo-prod-bg {
+  min-height: calc(100vh - 72px); // restando la navbar
+  background: radial-gradient(circle at top left, #0ed98e 0, #071021 38%, #020617 100%);
+  padding-bottom: 3rem;
+}
+
+.nuevo-prod-wrapper {
+  color: #f8fafc;
+}
+
+.titulo-pagina {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.subtitulo-pagina {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.badge-new {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.75rem;
+}
+
+.form-card {
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(10px);
+  color: #e5e7eb;
+}
+
+.preview-card,
+.tips-card {
+  border-radius: 20px;
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+/* 🔆 antes era #94a3b8, ahora un poco más claro */
+.preview-card .card-header small {
+  color: #cbd5f5;
+}
+
+.modern-input {
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background-color: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: all 0.15s ease-in-out;
+
+  &::placeholder {
+    color: #94a3b8; // un poquito más claro que antes
+  }
+
+  &:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+    background-color: #020617;
+    color: #f9fafb;
+  }
+}
+
+.textarea-desc {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.btn-gradient {
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #0ea5e9);
+  color: #0b1120;
+  box-shadow: 0 12px 25px rgba(16, 185, 129, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s;
+
+  &:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 18px 35px rgba(16, 185, 129, 0.5);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 18px rgba(16, 185, 129, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    box-shadow: none;
+  }
+}
+
+.preview-img {
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #1d283a 0, #020617 100%);
+}
+
+.preview-placeholder {
+  padding: 2rem 1rem;
+  color: #e5e7eb; // antes más oscuro
+
+  i {
+    color: #38bdf8;
+  }
+}
+
+.precio-preview {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #4ade80;
+}
+
+.bg-soft-success {
+  background-color: rgba(74, 222, 128, 0.14);
+}
+
+.text-success-emphasis {
+  color: #4ade80;
+}
+
+/* 📌 Mejora de contraste SOLO dentro de esta página */
+.nuevo-prod-wrapper .text-muted {
+  color: #d1e5ff !important;  // tips, descripciones, etc.
+}
+
+.nuevo-prod-wrapper .tips-card p,
+.nuevo-prod-wrapper .tips-card li,
+.nuevo-prod-wrapper .tips-card small,
+.nuevo-prod-wrapper .tips-card span {
+  color: #e2e8f0;              // textos de "Tips para vender mejor"
+}
+
+.nuevo-prod-wrapper .required-note {
+  color: #fecaca;              // "* Campos obligatorios"
+}
+
+/* ayuda bajo los campos (si usas <small class="field-help">...) */
+.nuevo-prod-wrapper .field-help {
+  color: #cbd5f5;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 767.98px) {
+  .titulo-pagina {
+    font-size: 1.45rem;
+  }
+
+  .form-card {
+    padding: 0.75rem;
+  }
+}

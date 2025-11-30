@@ -1,15 +1,15 @@
-<div class="login-container d-flex align-items-center justify-content-center vh-100">
-  <div class="login-box shadow-lg">
+<div class="login-page d-flex align-items-center justify-content-center">
+  <div class="login-card shadow-lg">
     <div class="text-center mb-4">
-      <div class="brand-icon mb-3">
+      <div class="brand-icon mb-3 d-inline-flex align-items-center justify-content-center">
         <i class="bi bi-shop-window"></i>
       </div>
       <h2 class="fw-bold mb-1 text-dark">Marketplace Local</h2>
-      <p class="text-muted">Inicia sesión según tu rol 👇</p>
+      <p class="text-muted mb-0">Inicia sesión para acceder a tu cuenta.</p>
     </div>
 
-    <form (ngSubmit)="iniciarSesion()">
-      <div class="form-group mb-3">
+    <form (ngSubmit)="iniciarSesion()" autocomplete="off">
+      <div class="mb-3">
         <label for="email" class="form-label fw-semibold">Correo electrónico</label>
         <input
           type="email"
@@ -22,7 +22,7 @@
         />
       </div>
 
-      <div class="form-group mb-3">
+      <div class="mb-4">
         <label for="password" class="form-label fw-semibold">Contraseña</label>
         <input
           type="password"
@@ -35,49 +35,21 @@
         />
       </div>
 
-      <!-- 🔹 Selección de Rol -->
-      <div class="form-group mb-4">
-        <label class="form-label fw-semibold d-block mb-2">Selecciona tu rol</label>
-
-        <div class="d-flex justify-content-around text-center">
-          <div
-            class="role-card p-3 rounded-3 border"
-            [class.active]="rolSeleccionado === 'comprador'"
-            (click)="rolSeleccionado = 'comprador'"
-          >
-            <i class="bi bi-bag-check-fill fs-3 text-primary mb-2"></i>
-            <p class="fw-semibold mb-0">Comprador</p>
-          </div>
-
-          <div
-            class="role-card p-3 rounded-3 border"
-            [class.active]="rolSeleccionado === 'vendedor'"
-            (click)="rolSeleccionado = 'vendedor'"
-          >
-            <i class="bi bi-tools fs-3 text-success mb-2"></i>
-            <p class="fw-semibold mb-0">Vendedor</p>
-          </div>
-
-          <div
-            class="role-card p-3 rounded-3 border"
-            [class.active]="rolSeleccionado === 'admin'"
-            (click)="rolSeleccionado = 'admin'"
-          >
-            <i class="bi bi-shield-lock-fill fs-3 text-danger mb-2"></i>
-            <p class="fw-semibold mb-0">Administrador</p>
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" class="btn btn-modern w-100 fw-semibold">
+      <button type="submit" class="btn btn-primary w-100 fw-semibold login-btn">
         Iniciar sesión
       </button>
     </form>
 
-    <p class="text-center mt-4 text-muted">
+    <!-- Texto con link al registro -->
+    <p class="text-center mt-4 text-muted mb-0">
       ¿No tienes cuenta?
-      <a routerLink="/registro" class="text-green fw-semibold text-decoration-none">
-        Regístrate aquí
+    </p>
+    <p class="text-center mt-1 mb-0">
+      <a
+        routerLink="/registro"
+        class="link-create-account fw-semibold text-decoration-none"
+      >
+        Crear cuenta como comprador o vendedor
       </a>
     </p>
   </div>

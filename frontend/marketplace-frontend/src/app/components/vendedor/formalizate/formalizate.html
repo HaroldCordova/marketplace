@@ -1,28 +1,162 @@
-<div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
-  <h4 class="fw-bold text-primary mb-3">📘 Formalízate</h4>
-  <p class="text-muted">
-    Avanza paso a paso hacia la formalización de tu emprendimiento.  
-    Cada paso completado te acerca a más beneficios dentro del Marketplace.
-  </p>
+<!-- src/app/components/vendedor/formalizate/formalizate.html -->
+<div class="formalizate-page d-flex align-items-start justify-content-center">
+  <div class="formalizate-card">
+    <div class="row g-4">
 
-  <!-- Barra de progreso -->
-  <div class="progress my-3" style="height: 20px;">
-    <div class="progress-bar bg-success" role="progressbar" [style.width.%]="progreso">
-      {{ progreso }}%
+      <!-- IZQUIERDA: TIENDA -->
+      <div class="col-lg-7">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h2 class="mb-1">Configura tu tienda</h2>
+            <p class="text-muted mb-0 small">
+              Crea la identidad de tu negocio y completa los pasos para formalizarte ante SUNAT e INDECOPI.
+            </p>
+          </div>
+
+          <a routerLink="/vendedor/panel" class="btn btn-outline-secondary btn-sm">
+            Panel del vendedor
+          </a>
+        </div>
+
+        <div *ngIf="cargandoTienda" class="text-muted">
+          Cargando información de la tienda...
+        </div>
+
+        <div *ngIf="!cargandoTienda">
+          <div class="alert alert-light d-inline-flex align-items-center gap-2 mb-3 px-3 py-2">
+            <span
+              class="badge rounded-pill"
+              [ngClass]="tienda ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning-emphasis'">
+              {{ tienda ? 'Tienda registrada' : 'Tienda pendiente de crear' }}
+            </span>
+            <span class="small text-muted">
+              Puedes actualizar esta información cuando lo necesites.
+            </span>
+          </div>
+
+          <form (ngSubmit)="tienda ? actualizarTienda() : crearTienda()">
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Nombre de la tienda *</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="nombreTienda"
+                name="nombreTienda"
+                placeholder="Ej: Tienda Victor Tech" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Descripción</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                [(ngModel)]="descripcion"
+                name="descripcion"
+                placeholder="Ej: Venta de celulares y laptops">
+              </textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">RUC (opcional)</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="ruc"
+                name="ruc"
+                placeholder="Ingresa tu RUC para marcar la tienda como formalizada" />
+              <small class="text-muted">
+                Si registras tu RUC, tu tienda aparecerá como
+                <strong>formalizada</strong> en el panel.
+              </small>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-2 formalizate-btn">
+              {{ tienda ? 'Actualizar tienda' : 'Crear tienda' }}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- DERECHA: GUÍA DE FORMALIZACIÓN -->
+      <div class="col-lg-5">
+        <!-- AQUÍ VA EL CARD CON LA CLASE formalizacion-guide -->
+        <div class="card border-0 shadow-sm h-100 formalizacion-guide">
+          <div class="card-body d-flex flex-column text-light">
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">Guía de formalización</h5>
+              <span class="badge bg-success-subtle text-success px-3 py-1">
+                Progreso {{ progreso }}%
+              </span>
+            </div>
+
+            <p class="text-muted small mb-3">
+              Tip: puedes marcar los pasos como completados a medida que avances,
+              para llevar un control visual y recibir notificaciones en tu cuenta.
+            </p>
+
+            <div *ngIf="cargandoPasos" class="text-muted small">
+              Cargando pasos de formalización...
+            </div>
+
+            <div class="pasos-wrapper flex-grow-1" *ngIf="!cargandoPasos && pasos.length">
+              <div
+                class="paso-item d-flex justify-content-between align-items-center"
+                *ngFor="let paso of pasos"
+                [ngClass]="{ 'completed': paso.completado }"
+              >
+                <div class="d-flex align-items-start gap-2">
+                  <div class="icon-circle">
+                    <i class="bi bi-check2" *ngIf="paso.completado; else iconPendiente"></i>
+                    <ng-template #iconPendiente>
+                      <i class="bi bi-circle"></i>
+                    </ng-template>
+                  </div>
+
+                  <div>
+                    <div class="paso-title fw-semibold">
+                      {{ paso.paso }}
+                    </div>
+
+                    <small class="text-muted d-block mb-1" *ngIf="paso.descripcion">
+                      {{ paso.descripcion }}
+                    </small>
+
+                    <a
+                      *ngIf="paso.link"
+                      [href]="paso.link"
+                      target="_blank"
+                      rel="noopener"
+                      class="link-sunat small"
+                    >
+                      Ver detalle en el portal oficial
+                    </a>
+
+                    <small class="text-muted d-block mt-1" *ngIf="paso.fechaActualizacion">
+                      Última actualización: {{ paso.fechaActualizacion | date:'short' }}
+                    </small>
+                  </div>
+                </div>
+
+                <div class="form-check form-switch ms-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="paso.completado"
+                    (change)="togglePaso(paso)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!cargandoPasos && !pasos.length" class="text-muted small">
+              Aún no hay pasos configurados para tu cuenta.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-
-  <!-- Lista de pasos -->
-  <ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let paso of pasos">
-      <div>
-        <h6 class="fw-bold">{{ paso.titulo }}</h6>
-        <p class="text-muted small">{{ paso.descripcion }}</p>
-        <a [href]="paso.link" target="_blank" class="text-primary small">Ver más</a>
-      </div>
-      <button class="btn btn-outline-success btn-sm" (click)="togglePaso(paso)">
-        <i class="bi" [ngClass]="paso.completado ? 'bi-check-circle-fill text-success' : 'bi-circle'"></i>
-      </button>
-    </li>
-  </ul>
 </div>

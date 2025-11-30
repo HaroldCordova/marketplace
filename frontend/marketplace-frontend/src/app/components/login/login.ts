@@ -2,47 +2,57 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
+import { RouterModule } from '@angular/router';        // 👈 AÑADIR ESTO
+import { AuthService, LoginResponse } from '../../services/auth.service';
 import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule                     // 👈 Y AÑADIRLO AQUÍ
+  ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
 export class Login {
   email = '';
   password = '';
-  rolSeleccionado: 'comprador' | 'vendedor' | 'admin' | '' = '';
 
-  constructor(private router: Router, private auth: AuthService, private toast: ToastService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    private toast: ToastService
+  ) {}
 
   iniciarSesion() {
-    if (!this.email || !this.password || !this.rolSeleccionado) {
-      this.toast.warn('Completa todos los campos y selecciona tu rol.');
+    if (!this.email || !this.password) {
+      this.toast.warn('Ingresa tu correo y contraseña.');
       return;
     }
 
-    // ✅ Guardar usuario y rol simulado
-    this.auth.login(this.email, this.rolSeleccionado);
+    this.auth.login(this.email, this.password).subscribe({
+      next: (resp: LoginResponse) => {
+        this.auth.saveSession(resp);
 
-    switch (this.rolSeleccionado) {
-      case 'admin':
-        this.toast.success('Bienvenido, Administrador 👑');
-        this.router.navigate(['/admin/panel']);
-        break;
-
-      case 'vendedor':
-        this.toast.success('Bienvenido, Vendedor 🧰');
-        this.router.navigate(['/vendedor/productos']);
-        break;
-
-      case 'comprador':
-        this.toast.success('Bienvenido, Comprador 🛒');
-        this.router.navigate(['/marketplace']);
-        break;
-    }
+        switch (resp.rol) {
+          case 'admin':
+            this.router.navigate(['/admin/panel']);
+            break;
+          case 'vendedor':
+            this.router.navigate(['/vendedor/panel']);
+            break;
+          case 'comprador':
+          default:
+            this.router.navigate(['/marketplace']);
+            break;
+        }
+      },
+      error: () => {
+        this.toast.error('Credenciales incorrectas o cuenta inactiva.');
+      }
+    });
   }
 }

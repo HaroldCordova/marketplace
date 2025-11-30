@@ -1,173 +1,143 @@
-/* Fondo suave animado */
-.carrito-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 3rem 1rem;
-  background: linear-gradient(135deg, #e3f2fd, #e0f7fa, #ede7f6);
-  background-size: 300% 300%;
-  animation: fondo 14s ease-in-out infinite;
-  font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI';
+.carrito-bg {
+  min-height: calc(100vh - 80px);
+  background: radial-gradient(circle at top left, #1dd1a1 0, #050826 55%, #020312 100%);
 }
 
-/* Tarjeta principal con efecto glass */
 .carrito-card {
-  width: 95%;
-  max-width: 1000px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  animation: aparecer 0.6s ease;
+  max-width: 1100px;
+  background: #f9fbff;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Título con degradado */
-.titulo-carrito {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #42a5f5, #7e57c2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+.carrito-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 1rem;
 
-/* Tabla */
-.tabla-carrito {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-.tabla-carrito thead th {
-  background: #1f2937;
-  color: #fff;
-  font-weight: 600;
-  padding: 0.9rem 0.8rem;
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.tabla-carrito tbody tr {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tabla-carrito tbody tr:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(66, 165, 245, 0.18);
-}
-
-.tabla-carrito td {
-  text-align: center;
-  padding: 0.9rem 0.8rem;
-  color: #374151;
-}
-
-.celda-nombre {
-  text-align: left;
-  font-weight: 600;
-}
-
-/* Input cantidad */
-input[type='number'] {
-  width: 70px;
-  padding: 0.45rem;
-  text-align: center;
-  border: 1.5px solid rgba(66, 165, 245, 0.35);
-  border-radius: 10px;
-  background: #ffffff;
-  transition: all 0.25s ease;
-  font-size: 0.95rem;
-}
-
-input[type='number']:focus {
-  outline: none;
-  border-color: #42a5f5;
-  box-shadow: 0 0 10px rgba(66, 165, 245, 0.25);
-}
-
-/* Botón eliminar */
-.btn-eliminar {
-  background: #ef5350;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.45rem 0.65rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.btn-eliminar:hover {
-  transform: scale(1.08);
-  background: #e53935;
-}
-
-/* Resumen y botón confirmar */
-.resumen {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.4rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.total {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #374151;
-
-  span {
-    color: #16a34a;
-    font-size: 1.35rem;
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #355cde;
   }
 }
 
-.btn-confirmar {
-  background: linear-gradient(135deg, #42a5f5, #7e57c2);
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
+
+  i {
+    font-size: 1.4rem;
+  }
+}
+
+.carrito-table-wrapper {
+  border-radius: 1rem;
+  background-color: #ffffff;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+
+  table {
+    margin-bottom: 0;
+  }
+
+  thead {
+    background: #111827;
+    color: #fff;
+
+    th {
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+    }
+  }
+
+  tbody tr {
+    td {
+      padding: 0.9rem 1rem;
+      vertical-align: middle;
+      border-top: 1px solid rgba(0, 0, 0, 0.03);
+      background: #ffffff;
+    }
+
+    &:nth-child(even) td {
+      background: #f8fafc;
+    }
+  }
+}
+
+.producto-info .thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #e5e7eb;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.cantidad-input {
+  max-width: 80px;
+  margin: 0 auto;
+}
+
+.total-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.resumen-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+
+  h5 {
+    font-weight: 700;
+    color: #111827;
+  }
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #4f46e5, #22c55e);
   border: none;
-  border-radius: 12px;
-  padding: 0.8rem 1.6rem;
+  color: #fff;
   font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease;
-  box-shadow: 0 8px 18px rgba(66, 165, 245, 0.28);
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);
+
+  &:hover {
+    filter: brightness(1.03);
+  }
 }
 
-.btn-confirmar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(94, 53, 177, 0.32);
-}
-
-.btn-confirmar:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-/* Animaciones */
-@keyframes fondo {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes aparecer {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsivo */
+/* Responsive */
 @media (max-width: 768px) {
-  .carrito-card { padding: 1.2rem; }
-  .titulo-carrito { font-size: 1.5rem; }
-  .resumen { flex-direction: column; align-items: flex-end; }
-  .tabla-carrito thead { display: none; }
-  .tabla-carrito tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
-  .tabla-carrito td { text-align: left; }
+  .carrito-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .carrito-table-wrapper {
+    table {
+      font-size: 0.85rem;
+    }
+  }
+
+  .resumen-card {
+    margin-top: 1.5rem;
+  }
 }
